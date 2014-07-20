@@ -72,15 +72,14 @@ First is very simple and is used to store logs comming from your application.
 
     /* add just 1 log */
     $aeLog = new Log();
-    $aeLog->setMessage($log['message']);
+    $aeLog->setMessage("Test message");
     $aeLog->setLogLevel('error');
     $aeLog->setNamespace('application.site.signin');
-    $aeLog->setDate('2011-09-25T21:46:38.955371');
+    $aeLog->setDate('2014-07-21T00:15:38.955371');
     $aeLog->setRequestId($uuid);
     $aeLog->setServer('localhost');
-    $logs->addLog($aeLog);
-
-    $client->send();
+    $aeLogs->addLog($aeLog);
+    $client->setEndpoint($aeLogs);
 ```
 
 Send repot data
