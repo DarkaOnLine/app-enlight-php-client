@@ -73,9 +73,6 @@ class AppEnlightApplicationComponent extends CApplicationComponent {
     if (isset($this->debug)) {
       $settings->setDebug($this->debug);
     }
-    if (isset($this->publicApiKey)) {
-      $settings->setPublicApiKey($this->publicApiKey);
-    }
     if (isset($this->scheme)) {
       $settings->setScheme($this->scheme);
     }
@@ -103,7 +100,6 @@ class AppEnlightApplicationComponent extends CApplicationComponent {
     $settings->setApiKey($this->apiKey);
     $settings->setClient($this->client);
     $settings->setDebug($this->debug);
-    $settings->setPublicApiKey($this->publicApiKey);
     $settings->setScheme($this->scheme);
     $settings->setUrl($this->url);
     $settings->setVersion($this->version);

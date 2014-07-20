@@ -13,7 +13,7 @@ Requirements
 ============
 - PHP 5.3.2+ with cURL extension available;
 - OpenSSL Support for HTTPS curl requests (if you would like to use http, this is not required);
-- enabled mod_unique_id model in httpd.conf http://httpd.apache.org/docs/2.2/mod/mod_unique_id.html;
+- (optional) enabled mod_unique_id model in httpd.conf http://httpd.apache.org/docs/2.2/mod/mod_unique_id.html;
 
 Installation
 ============
@@ -40,7 +40,6 @@ Note that you can ommit other settings and client will still work. Below example
     $settings->setApiKey('123APIKEY');
     $settings->setClient('php');
     $settings->setDebug(false);
-    $settings->setPublicApiKey('123PUBLICAPIKEY);
     $settings->setScheme('https');
     $settings->setUrl('api.appenlight.com/api');
     $settings->setVersion('0.4');
