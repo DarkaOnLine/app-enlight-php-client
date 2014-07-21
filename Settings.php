@@ -127,15 +127,6 @@ class Settings {
   }
 
   /**
-   * @param string $publicApiKey
-   * @return \Settings
-   */
-  public function setPublicApiKey($publicApiKey) {
-    $this->_publicApiKey = $publicApiKey;
-    return $this;
-  }
-
-  /**
    * @param string $scheme
    * @return \Settings
    */

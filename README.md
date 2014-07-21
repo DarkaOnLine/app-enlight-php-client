@@ -13,7 +13,7 @@ Requirements
 ============
 - PHP 5.3.2+ with cURL extension available;
 - OpenSSL Support for HTTPS curl requests (if you would like to use http, this is not required);
-- enabled mod_unique_id model in httpd.conf http://httpd.apache.org/docs/2.2/mod/mod_unique_id.html;
+- (optional) enabled mod_unique_id model in httpd.conf http://httpd.apache.org/docs/2.2/mod/mod_unique_id.html;
 
 Installation
 ============
@@ -40,7 +40,6 @@ Note that you can ommit other settings and client will still work. Below example
     $settings->setApiKey('123APIKEY');
     $settings->setClient('php');
     $settings->setDebug(false);
-    $settings->setPublicApiKey('123PUBLICAPIKEY);
     $settings->setScheme('https');
     $settings->setUrl('api.appenlight.com/api');
     $settings->setVersion('0.4');
@@ -73,15 +72,14 @@ First is very simple and is used to store logs comming from your application.
 
     /* add just 1 log */
     $aeLog = new Log();
-    $aeLog->setMessage($log['message']);
+    $aeLog->setMessage("Test message");
     $aeLog->setLogLevel('error');
     $aeLog->setNamespace('application.site.signin');
-    $aeLog->setDate('2011-09-25T21:46:38.955371');
+    $aeLog->setDate('2014-07-21T00:15:38.955371');
     $aeLog->setRequestId($uuid);
     $aeLog->setServer('localhost');
-    $logs->addLog($aeLog);
-
-    $client->send();
+    $aeLogs->addLog($aeLog);
+    $client->setEndpoint($aeLogs);
 ```
 
 Send repot data

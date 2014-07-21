@@ -136,8 +136,14 @@ class Log {
    * @param string $date
    * @return \AppEnlight\Endpoint\Data\Log
    */
-  public function setDate($date) {
-    $this->_date = $date;
+  public function setDate($date=null) {
+    if ($date === null){
+        $this->_date = gmdate ('Y-M-d\TH:i:s.u');
+    }
+    else{
+        $this->_date = $date;
+    }
+
     return $this;
   }
 

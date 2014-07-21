@@ -125,7 +125,34 @@ class Client {
    * @return string
    */
   public function getUUID() {
-    return (string) $_SERVER['UNIQUE_ID'];
+      if (array_key_exists('UNIQUE_ID', $_SERVER) === true){
+          return (string) $_SERVER['UNIQUE_ID'];
+      }
+      elseif (function_exists('com_create_guid') === true)
+      {
+          return trim(com_create_guid(), '{}');
+      }
+      else{
+          return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+              // 32 bits for "time_low"
+              mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+
+              // 16 bits for "time_mid"
+              mt_rand( 0, 0xffff ),
+
+              // 16 bits for "time_hi_and_version",
+              // four most significant bits holds version number 4
+              mt_rand( 0, 0x0fff ) | 0x4000,
+
+              // 16 bits, 8 bits for "clk_seq_hi_res",
+              // 8 bits for "clk_seq_low",
+              // two most significant bits holds zero and one for variant DCE1.1
+              mt_rand( 0, 0x3fff ) | 0x8000,
+
+              // 48 bits for "node"
+              mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+          );
+      }
   }
 
   /**
