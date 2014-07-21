@@ -10,6 +10,8 @@
 
 namespace AppEnlight\Endpoint\Data;
 
+use AppEnlight\Helper;
+
 /**
  * Single log in logs endpoint
  */
@@ -133,17 +135,11 @@ class Log {
   }
 
   /**
-   * @param string $date
+   * @param string|integer|\DateTime|null $date
    * @return \AppEnlight\Endpoint\Data\Log
    */
-  public function setDate($date=null) {
-    if ($date === null){
-        $this->_date = gmdate ('Y-M-d\TH:i:s.u');
-    }
-    else{
-        $this->_date = $date;
-    }
-
+  public function setDate($date = null) {
+    $this->_date = Helper::getDate($date);
     return $this;
   }
 

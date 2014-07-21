@@ -10,6 +10,7 @@
 
 namespace AppEnlight\Endpoint\Data\Report;
 
+use AppEnlight\Helper;
 use AppEnlight\Endpoint\Data\Report\ReportDetail\Request;
 use AppEnlight\Endpoint\Data\Report\ReportDetail\RequestStats;
 use AppEnlight\Endpoint\Data\Report\ReportDetail\SlowCall;
@@ -232,30 +233,20 @@ class ReportDetail {
   }
 
   /**
-   * @param string $startTime
+   * @param string|integer|\DateTime|null $startTime
    * @return \AppEnlight\Endpoint\Data\Report\ReportDetail
    */
-  public function setStartTime($startTime=null) {
-      if ($startTime === null){
-          $this->_startTime = gmdate ('Y-M-d\TH:i:s.u');
-      }
-      else{
-          $this->_startTime = $startTime;
-      }
+  public function setStartTime($startTime = null) {
+    $this->_startTime = Helper::getDate($startTime);
     return $this;
   }
 
   /**
-   * @param string $endTime
+   * @param string|integer|\DateTime|null $endTime
    * @return \AppEnlight\Endpoint\Data\Report\ReportDetail
    */
-  public function setEndTime($endTime=null) {
-      if ($endTime === null){
-          $this->_endTime = gmdate ('Y-M-d\TH:i:s.u');
-      }
-      else{
-          $this->_endTime = $endTime;
-      }
+  public function setEndTime($endTime = null) {
+    $this->_endTime = Helper::getDate($endTime);
     return $this;
   }
 
