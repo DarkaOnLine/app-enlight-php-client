@@ -140,7 +140,10 @@ class Log {
     if ($date === null){
         $this->_date = gmdate ('Y-M-d\TH:i:s.u');
     }
-    $this->_date = $date;
+    else{
+        $this->_date = $date;
+    }
+
     return $this;
   }
 
