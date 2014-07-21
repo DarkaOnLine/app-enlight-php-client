@@ -33,11 +33,6 @@ class Settings {
   /**
    * @var string
    */
-  protected $_publicApiKey;
-
-  /**
-   * @var string
-   */
   protected $_scheme = "https";
 
   /**
@@ -69,13 +64,6 @@ class Settings {
    */
   public function getDebug() {
     return $this->_debug;
-  }
-
-  /**
-   * @return string
-   */
-  public function getPublicApiKey() {
-    return $this->_publicApiKey;
   }
 
   /**

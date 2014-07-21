@@ -47,10 +47,7 @@ class AppEnlightErrorHandler extends CErrorHandler {
     $report->setHttpStatus($exception instanceof CHttpException ? $exception->statusCode : 500);
     $report->addReportDetails($reportDetails);
 
-    $reports = new AppEnlight\Endpoint\Reports();
-    $reports->addReport($report);
-
-    $client->setEndpoint($reports);
+    $client->addReport($report);
     $client->send();
 
     parent::handleException($exception);

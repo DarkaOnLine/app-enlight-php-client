@@ -65,8 +65,6 @@ First is very simple and is used to store logs comming from your application.
 ```php
     use \AppEnlight\Endpoint\Logs;
     use \AppEnlight\Endpoint\Data\Log;
-    
-    $aeLogs = new Logs();
 
     $uuid = $client->getUUID();
 
@@ -78,7 +76,7 @@ First is very simple and is used to store logs comming from your application.
     $aeLog->setDate('2014-07-21T00:15:38.955371');
     $aeLog->setRequestId($uuid);
     $aeLog->setServer('localhost');
-    $aeLogs->addLog($aeLog);
+    $client->addLog($aeLog);
     $client->setEndpoint($aeLogs);
 ```
 
@@ -132,10 +130,7 @@ Below example shows how to send simple report
     $report->setHttpStatus(500);
     $report->addReportDetails($reportDetails);
 
-    $reports = new Reports();
-    $reports->addReport($report);
-
-    $client->setEndpoint($reports);
+    $client->addReport($report);
     $client->send();
 ```    
 

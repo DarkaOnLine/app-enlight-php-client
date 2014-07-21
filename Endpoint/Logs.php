@@ -34,6 +34,14 @@ class Logs extends Endpoint {
   }
 
   /**
+   * @return \AppEnlight\Endpoint\Logs
+   */
+  public function clearData() {
+    unset($this->_logs);
+    return $this;
+  }
+
+  /**
    * @return string
    */
   public function getUrlEndpoint() {

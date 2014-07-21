@@ -29,4 +29,9 @@ abstract class Endpoint {
    * @return string
    */
   abstract public function getUrlEndpoint();
+
+  /**
+   * Clear data
+   */
+  abstract public function clearData();
 }

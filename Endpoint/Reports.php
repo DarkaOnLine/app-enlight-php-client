@@ -34,6 +34,14 @@ class Reports extends Endpoint {
   }
 
   /**
+   * @return \AppEnlight\Endpoint\Reports
+   */
+  public function clearData() {
+    unset($this->_reports);
+    return $this;
+  }
+
+  /**
    * @return string
    */
   public function getUrlEndpoint() {

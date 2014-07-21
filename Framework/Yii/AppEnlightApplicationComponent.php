@@ -38,12 +38,6 @@ class AppEnlightApplicationComponent extends CApplicationComponent {
   public $debug;
 
   /**
-   * Your AppEnlight application Public API key
-   * @var string
-   */
-  public $publicApiKey;
-
-  /**
    * Set http or https to use secure connection
    * @var string
    */
