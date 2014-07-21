@@ -235,8 +235,13 @@ class ReportDetail {
    * @param string $startTime
    * @return \AppEnlight\Endpoint\Data\Report\ReportDetail
    */
-  public function setStartTime($startTime) {
-    $this->_startTime = $startTime;
+  public function setStartTime($startTime=null) {
+      if ($startTime === null){
+          $this->_startTime = gmdate ('Y-M-d\TH:i:s.u');
+      }
+      else{
+          $this->_startTime = $startTime;
+      }
     return $this;
   }
 
@@ -244,8 +249,13 @@ class ReportDetail {
    * @param string $endTime
    * @return \AppEnlight\Endpoint\Data\Report\ReportDetail
    */
-  public function setEndTime($endTime) {
-    $this->_endTime = $endTime;
+  public function setEndTime($endTime=null) {
+      if ($endTime === null){
+          $this->_endTime = gmdate ('Y-M-d\TH:i:s.u');
+      }
+      else{
+          $this->_endTime = $endTime;
+      }
     return $this;
   }
 
