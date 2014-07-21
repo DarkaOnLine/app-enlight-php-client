@@ -48,7 +48,7 @@ Note that you can ommit other settings and client will still work. Below example
 
 Create client
 =============
-One settings are defined, you can pass them to client.
+Once settings are defined, you can pass them to client.
 
 ```php
 $client = new \AppEnlight\Client($settings);
