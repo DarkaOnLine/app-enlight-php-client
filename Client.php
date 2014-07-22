@@ -13,6 +13,7 @@ namespace AppEnlight;
 use AppEnlight\Settings;
 use AppEnlight\Endpoint\Logs;
 use AppEnlight\Endpoint\Reports;
+use AppEnlight\Endpoint\RequestStats;
 use AppEnlight\Endpoint\Data\Log;
 use AppEnlight\Endpoint\Data\Report;
 
@@ -23,6 +24,7 @@ class Client {
 
   const SEND_LOGS = 'logs';
   const SEND_REPORTS = 'reports';
+  const SEND_METRICS = 'metrics';
 
   /**
    * @var resource
@@ -33,6 +35,11 @@ class Client {
    * @var \AppEnlight\Endpoint\Logs
    */
   private $_logs;
+
+  /**
+   * @var \AppEnlight\Endpoint\ReuqestStats
+   */
+  private $_requestStats;
 
   /**
    * @var \AppEnlight\Endpoint\Reports
@@ -52,6 +59,7 @@ class Client {
     $this->setSettings($settings);
     $this->_logs = new Logs();
     $this->_reports = new Reports();
+    $this->_requestStats = new RequestStats();
   }
 
   /**
@@ -60,6 +68,23 @@ class Client {
    */
   public function addLog(Log $log) {
     $this->_logs->addLog($log);
+    return $this;
+  }
+
+  /**
+   * @param \AppEnlight\Metric $metric
+   * @param string $server
+   * @param string $timestamp
+   * @return \AppEnlight\Client
+   */
+  public function addMetric(Metric $metric, $server = null, $timestamp = null) {
+    if ($server !== null) {
+      $this->_requestStats->setServer($server);
+    }
+    if ($timestamp !== null) {
+      $this->_requestStats->setTimestamp($timestamp);
+    }
+    $this->_requestStats->addMetric($metric);
     return $this;
   }
 
@@ -121,6 +146,10 @@ class Client {
         $jsonData = $this->_reports->toJSON();
         $this->_reports->clear();
         break;
+      case self::SEND_REQUEST_STATS:
+        $jsonData = $this->_requestStats->toJSON();
+        $this->_requestStats->clear();
+        break;
       default:
         $jsonData = null;
     }
@@ -143,6 +172,13 @@ class Client {
    */
   public function sendLogs() {
     return $this->send(self::SEND_LOGS);
+  }
+
+  /**
+   * @return boolean|object
+   */
+  public function sendMetrics() {
+    return $this->send(self::SEND_METRICS);
   }
 
   /**
