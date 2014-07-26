@@ -26,11 +26,6 @@ class Settings {
   protected $_client = "php";
 
   /**
-   * @var boolean
-   */
-  protected $_debug = false;
-
-  /**
    * @var string
    */
   protected $_scheme = "https";
@@ -57,13 +52,6 @@ class Settings {
    */
   public function getClient() {
     return $this->_client;
-  }
-
-  /**
-   * @return boolean
-   */
-  public function getDebug() {
-    return $this->_debug;
   }
 
   /**
@@ -102,15 +90,6 @@ class Settings {
    */
   public function setClient($client) {
     $this->_client = $client;
-    return $this;
-  }
-
-  /**
-   * @param boolean $debug
-   * @return \Settings
-   */
-  public function setDebug($debug) {
-    $this->_debug = (boolean) $debug;
     return $this;
   }
 

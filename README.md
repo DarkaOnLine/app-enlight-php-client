@@ -39,7 +39,6 @@ Note that you can ommit other settings and client will still work. Below example
     $settings = new \AppEnlight\Settings();
     $settings->setApiKey('123APIKEY');
     $settings->setClient('php');
-    $settings->setDebug(false);
     $settings->setScheme('https');
     $settings->setUrl('api.appenlight.com/api');
     $settings->setVersion('0.4');
@@ -96,12 +95,6 @@ Below example shows how to send simple report
     //get client
     $client = new Client($settings);
 
-    //prepare request data
-    $request = new Request();
-    $request->setRequestMethod('GET');
-    $request->setPathInfo('/some/path/');
-    $request->setPost($_POST);
-
     //prepare report detail data 
     $reportDetails = new ReportDetail();
     $reportDetails->setUsername('test user');
@@ -122,8 +115,7 @@ Below example shows how to send simple report
       $reportDetail->addTraceback($aeTrace);
     }
     
-    $reportDetails->setRequest($request);
-
+    $reportDetails->setRequest(new Request(););
   
     $report = new Report();
     $report->setError('Very dangerouse error');

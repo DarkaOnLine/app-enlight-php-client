@@ -16,19 +16,80 @@ namespace AppEnlight\Endpoint\Data\Report\ReportDetail;
 class Request {
 
   /**
+   * @var array
+   */
+  protected $_cookies;
+
+  /**
+   * @var array
+   */
+  protected $_files;
+
+  /**
+   * @var array
+   */
+  protected $_getData;
+
+  /**
+   *
+   * @var array
+   */
+  protected $_postData;
+
+  /**
+   * @var array
+   */
+  protected $_requestData;
+
+  /**
    * @var string
    */
   protected $_requestMethod;
 
   /**
-   * @var string
+   * @var array
    */
-  protected $_pathInfo;
+  protected $_server;
 
   /**
-   * @var string
+   * @var array
    */
-  protected $_post;
+  protected $_session;
+
+  /**
+   * @return array
+   */
+  public function getCookies() {
+    return isset($this->_cookies) ? $this->_cookies : $_COOKIE;
+  }
+
+  /**
+   * @return array
+   */
+  public function getFiles() {
+    return isset($this->_files) ? $this->_files : $_FILES;
+  }
+
+  /**
+   * @return array
+   */
+  public function getGetData() {
+    return isset($this->_getData) ? $this->_getData : $_GET;
+  }
+
+  /**
+   * @return array
+   */
+  public function getPostData() {
+    return isset($this->_postData) ? $this->_postData : $_POST;
+  }
+
+  /**
+   * @return array
+   */
+  public function getRequestData() {
+    return $this->_requestData;
+  }
 
   /**
    * @return string
@@ -38,21 +99,72 @@ class Request {
   }
 
   /**
-   * @return string
+   * @return array
    */
-  public function getPathInfo() {
-    return $this->_pathInfo;
+  public function getServer() {
+    return isset($this->_server) ? $this->_server : $_SERVER;
   }
 
   /**
-   * @return string
+   * @return array
    */
-  public function getPost() {
-    return $this->_post;
+  public function getSession() {
+    return isset($this->_session) ? $this->_session : $_SESSION;
   }
 
   /**
-   *
+   * @return boolean
+   */
+  public function hasRequestData() {
+    return isset($this->_requestData);
+  }
+
+  /**
+   * @param array $cookies
+   * @return \AppEnlight\Endpoint\Data\Report\ReportDetail\Request
+   */
+  public function setCookies($cookies) {
+    $this->_cookies = $cookies;
+    return $this;
+  }
+
+  /**
+   * @param array $files
+   * @return \AppEnlight\Endpoint\Data\Report\ReportDetail\Request
+   */
+  public function setFiles($files) {
+    $this->_files = $files;
+    return $this;
+  }
+
+  /**
+   * @param array $getData
+   * @return \AppEnlight\Endpoint\Data\Report\ReportDetail\Request
+   */
+  public function setGetData($getData) {
+    $this->_getData = $getData;
+    return $this;
+  }
+
+  /**
+   * @param array $postData
+   * @return \AppEnlight\Endpoint\Data\Report\ReportDetail\Request
+   */
+  public function setPostData($postData) {
+    $this->_postData = $postData;
+    return $this;
+  }
+
+  /**
+   * @param array $requestData
+   * @return \AppEnlight\Endpoint\Data\Report\ReportDetail\Request
+   */
+  public function setRequestData($requestData) {
+    $this->_requestData = $requestData;
+    return $this;
+  }
+
+  /**
    * @param string $requestMethod
    * @return \AppEnlight\Endpoint\Data\Report\ReportDetail\Request
    */
@@ -62,20 +174,20 @@ class Request {
   }
 
   /**
-   * @param string $pathInfo
+   * @param array $server
    * @return \AppEnlight\Endpoint\Data\Report\ReportDetail\Request
    */
-  public function setPathInfo($pathInfo) {
-    $this->_pathInfo = $pathInfo;
+  public function setServer($server) {
+    $this->_server = $server;
     return $this;
   }
 
   /**
-   * @param string $post
+   * @param array $session
    * @return \AppEnlight\Endpoint\Data\Report\ReportDetail\Request
    */
-  public function setPost($post) {
-    $this->_post = $post;
+  public function setSession($session) {
+    $this->_session = $session;
     return $this;
   }
 
@@ -83,11 +195,15 @@ class Request {
    * @return array
    */
   public function toArray() {
-    return array(
-      "REQUEST_METHOD" => $this->getRequestMethod(),
-      "PATH_INFO" => $this->getPathInfo(),
-      "POST" => $this->getPost()
-    );
+    $requestData = $this->hasRequestData() ? $this->getRequestData() : array();
+    $requestData['COOKIES'] = $this->getCookies();
+    $requestData['FILES'] = $this->getFiles();
+    $requestData['POST'] = $this->getPostData();
+    $requestData['GET'] = $this->getGetData();
+    $requestData['REQUEST_METHOD'] = $this->getRequestMethod();
+    $requestData['SERVER'] = $this->getServer();
+    $requestData['SESSION'] = $this->getSession();
+    return $requestData;
   }
 
 }

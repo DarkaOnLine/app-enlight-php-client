@@ -32,12 +32,6 @@ class AppEnlightApplicationComponent extends CApplicationComponent {
   public $client;
 
   /**
-   * Set true to display logged data
-   * @var boolean
-   */
-  public $debug;
-
-  /**
    * Set http or https to use secure connection
    * @var string
    */
@@ -63,9 +57,6 @@ class AppEnlightApplicationComponent extends CApplicationComponent {
     }
     if (isset($this->client)) {
       $settings->setClient($this->client);
-    }
-    if (isset($this->debug)) {
-      $settings->setDebug($this->debug);
     }
     if (isset($this->scheme)) {
       $settings->setScheme($this->scheme);
@@ -93,7 +84,6 @@ class AppEnlightApplicationComponent extends CApplicationComponent {
     $settings = new \AppEnlight\Settings();
     $settings->setApiKey($this->apiKey);
     $settings->setClient($this->client);
-    $settings->setDebug($this->debug);
     $settings->setScheme($this->scheme);
     $settings->setUrl($this->url);
     $settings->setVersion($this->version);

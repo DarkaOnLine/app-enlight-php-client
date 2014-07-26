@@ -17,6 +17,7 @@ class AppEnlightErrorHandler extends CErrorHandler {
 
   protected function handleException($exception) {
 
+    /* @var $client \AppEnlight\Client */
     $client = Yii::app()->getComponent('appenlight')->getClient();
 
     $category = 'exception.' . get_class($exception);
@@ -27,9 +28,6 @@ class AppEnlightErrorHandler extends CErrorHandler {
     $appRequest = Yii::app()->getRequest();
 
     $request = new AppEnlight\Endpoint\Data\Report\ReportDetail\Request();
-    $request->setRequestMethod($appRequest->getRequestType());
-    $request->setPathInfo($appRequest->getPathInfo());
-    $request->setPost($_POST);
 
     $reportDetails = new AppEnlight\Endpoint\Data\Report\ReportDetail();
     $reportDetails->setUsername(Yii::app()->user->isGuest ? 'guest' : Yii::app()->user->name);
@@ -48,7 +46,7 @@ class AppEnlightErrorHandler extends CErrorHandler {
     $report->addReportDetails($reportDetails);
 
     $client->addReport($report);
-    $client->send();
+    $client->sendReports();
 
     parent::handleException($exception);
   }
@@ -61,13 +59,15 @@ class AppEnlightErrorHandler extends CErrorHandler {
 
     $trace = $exception->getTrace();
 
+
     foreach ($trace as $t) {
       $aeTrace = new \AppEnlight\Endpoint\Data\Report\ReportDetail\Traceback();
       $aeTrace->setFile(isset($t['file']) ? $t['file'] : 'unknown');
       $aeTrace->setFn(isset($t['class']) ? "{$t['class']}->{$t['function']}" : $t['function']);
       $aeTrace->setLine(isset($t['line']) ? $t['line'] : 0);
+      $aeArgs = array();
       foreach ($t['args'] as $arg) {
-        $aeArgs[] = array(gettype($arg), $arg);
+        $aeArgs[] = $arg;
       }
       $aeTrace->setVars($aeArgs);
       $reportDetail->addTraceback($aeTrace);

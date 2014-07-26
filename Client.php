@@ -11,6 +11,7 @@
 namespace AppEnlight;
 
 use AppEnlight\Settings;
+use AppEnlight\Endpoint;
 use AppEnlight\Endpoint\Logs;
 use AppEnlight\Endpoint\Reports;
 use AppEnlight\Endpoint\RequestStats;
@@ -135,32 +136,34 @@ class Client {
     curl_setopt($this->_curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($this->_curl, CURLOPT_POST, true);
     curl_setopt($this->_curl, CURLOPT_HEADER, false);
-    curl_setopt($this->_curl, CURLOPT_URL, $this->buildUrl());
 
     switch ($endpoint) {
       case self::SEND_LOGS:
+        curl_setopt($this->_curl, CURLOPT_URL, $this->buildUrl($this->_logs));
         $jsonData = $this->_logs->toJSON();
-        $this->_logs->clear();
+        $this->_logs->clearData();
         break;
       case self::SEND_REPORTS:
+        curl_setopt($this->_curl, CURLOPT_URL, $this->buildUrl($this->_reports));
         $jsonData = $this->_reports->toJSON();
-        $this->_reports->clear();
+        $this->_reports->clearData();
         break;
       case self::SEND_REQUEST_STATS:
+        curl_setopt($this->_curl, CURLOPT_URL, $this->buildUrl($this->_requestStats));
         $jsonData = $this->_requestStats->toJSON();
-        $this->_requestStats->clear();
+        $this->_requestStats->clearData();
         break;
       default:
         $jsonData = null;
     }
 
     if ($jsonData !== null) {
-      curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $jsonData);
+      curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $this->obfuscateSecureData(($jsonData)));
       $response = curl_exec($this->_curl);
       if (mb_strlen($response) > 2 && mb_strcut($response, 0, 2) === 'OK') {
         return true;
       } else {
-        return json_decode($response);
+        return json_decode($jsonData);
       }
     } else {
       return false;
@@ -189,13 +192,33 @@ class Client {
   }
 
   /**
-   * @return string
+   * @param \AppEnlight\Endpoint $endpoint
+   * @return type
    */
-  public function buildUrl() {
+  public function buildUrl(Endpoint $endpoint) {
     $scheme = $this->_settings->getScheme();
     $url = $this->_settings->getUrl();
     $version = $this->_settings->getVersion();
-    return "{$scheme}://{$url}/{$this->_endpoint->getUrlEndpoint()}?protocol_version={$version}";
+    return "{$scheme}://{$url}/{$endpoint->getUrlEndpoint()}?protocol_version={$version}";
+  }
+
+  public function obfuscateSecureData($jsonData) {
+    $blacklist = implode("|", array(
+      "password",
+      "passwd",
+      "pwd",
+      "pass",
+      "auth_tkt",
+      "auth",
+      "secret",
+      "csrf",
+      "session",
+      "config",
+      "settings",
+      "environ",
+      "xsrf"
+    ));
+    return preg_replace('#(\"(' . $blacklist . ')\"):(\"[^\"]+)#', '${1}:"***"', $jsonData);
   }
 
   /**
