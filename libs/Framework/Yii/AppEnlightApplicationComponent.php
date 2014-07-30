@@ -104,7 +104,7 @@ class AppEnlightApplicationComponent extends CApplicationComponent {
    * about server name. Therefore gethostname() function is used
    * @return string
    */
-  public static function getHostName() {
+  public function getHostName() {
     if (Yii::app() instanceof CConsoleApplication) {
       return gethostname();
     } else {
@@ -118,7 +118,7 @@ class AppEnlightApplicationComponent extends CApplicationComponent {
    * his name is returned. Otherwise "guest" is returned
    * @return string
    */
-  public static function getUsername() {
+  public function getUsername() {
     if (Yii::app() instanceof CConsoleApplication) {
       return 'console';
     } else {
