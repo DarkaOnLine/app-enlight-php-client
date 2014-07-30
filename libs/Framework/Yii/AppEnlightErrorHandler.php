@@ -31,8 +31,8 @@ class AppEnlightErrorHandler extends CErrorHandler {
     $request = new AppEnlight\Endpoint\Data\Report\ReportDetail\Request();
 
     $reportDetails = new AppEnlight\Endpoint\Data\Report\ReportDetail();
-    $reportDetails->setUsername(AppEnlightHelper::getUsername());
-    $reportDetails->setUrl(AppEnlightHelper::getHostName() . $appRequest->url);
+    $reportDetails->setUsername($client->getUsername());
+    $reportDetails->setUrl($client->getHostName() . $appRequest->url);
     $reportDetails->setUserAgent($appRequest->getUserAgent());
     $reportDetails->setMessage($exception->getMessage());
     $reportDetails->setRequestId($client->getUUID());
