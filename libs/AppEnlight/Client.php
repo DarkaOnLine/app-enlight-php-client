@@ -158,12 +158,12 @@ class Client {
     }
 
     if ($jsonData !== null) {
-      curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $this->obfuscateSecureData(($jsonData)));
+      curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $this->obfuscateSecureData($jsonData));
       $response = curl_exec($this->_curl);
       if (mb_strlen($response) > 2 && mb_strcut($response, 0, 2) === 'OK') {
         return true;
       } else {
-        return json_decode($jsonData);
+        return json_decode($response);
       }
     } else {
       return false;

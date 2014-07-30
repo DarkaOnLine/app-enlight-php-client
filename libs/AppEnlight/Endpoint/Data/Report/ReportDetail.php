@@ -118,6 +118,14 @@ class ReportDetail {
    * @return string
    */
   public function getIp() {
+    $ip = $this->_ip;
+    if (!isset($ip)) {
+      if (isset($_SERVER['REMOTE_ADDR'])) {
+        $ip = $_SERVER['REMOTE_ADDR'];
+      } else {
+        $ip = gethostbynamel(gethostbynamel());
+      }
+    }
     return $this->_ip;
   }
 

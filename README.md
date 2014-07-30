@@ -1,6 +1,8 @@
 App Enlight PHP Client
 ======================
 
+IMPORTANT: This library is under development. Do not use it for your productive application!
+
 PHP Client for AppEnlight (previously known as Errormator).
 
 App Enlight main goal is to monitor your application. This API client for PHP provides an easy to use interface to send to App Enlight:

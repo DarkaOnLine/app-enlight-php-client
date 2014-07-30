@@ -16,9 +16,9 @@ class AppEnlightLogRoute extends CLogRoute {
 
   protected function processLogs($logs) {
 
-    $client = Yii::app()->getComponent('appenlight')->getClient();
+    $appEnlight = Yii::app()->getComponent('appenlight');
+    $client = $appEnlight->getClient();
 
-    $servername = Yii::app()->getRequest()->serverName;
     $uuid = $client->getUUID();
 
     foreach ($logs as $log) {
@@ -26,14 +26,14 @@ class AppEnlightLogRoute extends CLogRoute {
       $aeLog->setMessage($log[0]);
       $aeLog->setLogLevel($log[1]);
       $aeLog->setNamespace($log[2]);
-      $aeLog->setDate($log[3]);
+      $aeLog->setDate((int) $log[3]);
       $aeLog->setRequestId($uuid);
-      $aeLog->setServer($servername);
-      $client->addLog($log);
+      $aeLog->setServer(AppEnlightHelper::getHostName());
+      $client->addLog($aeLog);
       unset($aeLog);
     }
 
-    $client->send();
+    $client->sendLogs();
   }
 
 }

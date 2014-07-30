@@ -15,7 +15,7 @@ namespace AppEnlight;
  */
 abstract class Helper {
 
-  const DATE_FORMAT = 'Y-M-d\TH:i:s.u';
+  const DATE_FORMAT = 'Y-m-d\TH:i:s.u';
 
   /**
    * Converts date to given format self::DATE_FORMAT

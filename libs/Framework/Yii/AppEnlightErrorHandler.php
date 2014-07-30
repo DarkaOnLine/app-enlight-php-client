@@ -18,7 +18,8 @@ class AppEnlightErrorHandler extends CErrorHandler {
   protected function handleException($exception) {
 
     /* @var $client \AppEnlight\Client */
-    $client = Yii::app()->getComponent('appenlight')->getClient();
+    $appEnlight = Yii::app()->getComponent('appenlight');
+    $client = $appEnlight->getClient();
 
     $category = 'exception.' . get_class($exception);
     if ($exception instanceof CHttpException) {
@@ -30,9 +31,8 @@ class AppEnlightErrorHandler extends CErrorHandler {
     $request = new AppEnlight\Endpoint\Data\Report\ReportDetail\Request();
 
     $reportDetails = new AppEnlight\Endpoint\Data\Report\ReportDetail();
-    $reportDetails->setUsername(Yii::app()->user->isGuest ? 'guest' : Yii::app()->user->name);
-    $reportDetails->setUrl($appRequest->hostInfo . $appRequest->url);
-    $reportDetails->setIp(gethostname());
+    $reportDetails->setUsername(AppEnlightHelper::getUsername());
+    $reportDetails->setUrl(AppEnlightHelper::getHostName() . $appRequest->url);
     $reportDetails->setUserAgent($appRequest->getUserAgent());
     $reportDetails->setMessage($exception->getMessage());
     $reportDetails->setRequestId($client->getUUID());
