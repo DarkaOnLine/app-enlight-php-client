@@ -142,7 +142,7 @@ class Report {
    * @return \AppEnlight\Endpoint\Data\Report
    */
   public function setError($error) {
-    $this->_error = (int) $error;
+    $this->_error = $error;
     return $this;
   }
 
