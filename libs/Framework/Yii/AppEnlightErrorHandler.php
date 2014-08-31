@@ -31,22 +31,27 @@ class AppEnlightErrorHandler extends CErrorHandler {
     $request = new AppEnlight\Endpoint\Data\Report\ReportDetail\Request();
 
     $reportDetails = new AppEnlight\Endpoint\Data\Report\ReportDetail();
-    $reportDetails->setUsername($client->getUsername());
-    $reportDetails->setUrl($client->getHostName() . $appRequest->url);
+    $reportDetails->setUsername($appEnlight->getUsername());
+    if (Yii::app() instanceof CConsoleApplication) {
+      $reportDetails->setUrl($appEnlight->getHostName());
+    } else {
+      $reportDetails->setUrl($appEnlight->getHostName() . $appRequest->getUrl());
+    }
+
     $reportDetails->setUserAgent($appRequest->getUserAgent());
-    $reportDetails->setMessage($exception->getMessage());
+    $reportDetails->setMessage($exception->__toString());
     $reportDetails->setRequestId($client->getUUID());
     $reportDetails->setRequestStats(new \AppEnlight\Endpoint\Data\Report\ReportDetail\RequestStats);
     $this->_processTrace($exception, $reportDetails);
     $reportDetails->setRequest($request);
 
     $report = new AppEnlight\Endpoint\Data\Report();
-    $report->setError($exception->__toString());
+    $report->setError($exception->getMessage());
     $report->setHttpStatus($exception instanceof CHttpException ? $exception->statusCode : 500);
     $report->addReportDetails($reportDetails);
 
     $client->addReport($report);
-    $client->sendReports();
+    $result = $client->sendReports();
 
     parent::handleException($exception);
   }
@@ -58,7 +63,6 @@ class AppEnlightErrorHandler extends CErrorHandler {
   protected function _processTrace(Exception $exception, AppEnlight\Endpoint\Data\Report\ReportDetail $reportDetail) {
 
     $trace = $exception->getTrace();
-
 
     foreach ($trace as $t) {
       $aeTrace = new \AppEnlight\Endpoint\Data\Report\ReportDetail\Traceback();

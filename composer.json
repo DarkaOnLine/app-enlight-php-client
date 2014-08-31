@@ -24,8 +24,8 @@
     },
     "autoload": {
       "psr-0": {
-        "Elastica": "libs/",
-        "Elastica\\Test": "test/libs"
+        "AppEnlight": "libs/",
+        "AppEnlight\\Test": "test/libs"
       }
     }
 }

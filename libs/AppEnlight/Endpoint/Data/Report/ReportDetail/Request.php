@@ -109,7 +109,7 @@ class Request {
    * @return array
    */
   public function getSession() {
-    return isset($this->_session) ? $this->_session : $_SESSION;
+    return isset($this->_session) ? $this->_session : (isset($_SESSION) ? $_SESSION : null);
   }
 
   /**

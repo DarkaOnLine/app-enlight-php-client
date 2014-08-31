@@ -28,7 +28,7 @@ class AppEnlightLogRoute extends CLogRoute {
       $aeLog->setNamespace($log[2]);
       $aeLog->setDate((int) $log[3]);
       $aeLog->setRequestId($uuid);
-      $aeLog->setServer($client->getHostName());
+      $aeLog->setServer($appEnlight->getHostName());
       $client->addLog($aeLog);
       unset($aeLog);
     }

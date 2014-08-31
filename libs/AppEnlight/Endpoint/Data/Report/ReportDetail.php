@@ -123,7 +123,7 @@ class ReportDetail {
       if (isset($_SERVER['REMOTE_ADDR'])) {
         $ip = $_SERVER['REMOTE_ADDR'];
       } else {
-        $ip = gethostbynamel(gethostbynamel());
+        $ip = gethostbyname(gethostname());
       }
     }
     return $this->_ip;
@@ -272,7 +272,11 @@ class ReportDetail {
    * @return \AppEnlight\Endpoint\Data\Report\ReportDetail
    */
   public function setMessage($message) {
-    $this->_message = $message;
+    if (strlen($message) > 2048) {
+      $this->message = substr($message, 0, 2048);
+    } else {
+      $this->_message = $message;
+    }
     return $this;
   }
 

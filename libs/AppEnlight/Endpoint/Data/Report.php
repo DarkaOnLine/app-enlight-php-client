@@ -86,7 +86,7 @@ class Report {
    * @return string
    */
   public function getError() {
-    return $this->_error;
+    return (string) $this->_error;
   }
 
   /**
@@ -138,11 +138,11 @@ class Report {
   }
 
   /**
-   * @param integer $error
+   * @param string $error
    * @return \AppEnlight\Endpoint\Data\Report
    */
   public function setError($error) {
-    $this->_error = (int) $error;
+    $this->_error = (string) $error;
     return $this;
   }
 
