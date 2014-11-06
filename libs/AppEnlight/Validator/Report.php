@@ -91,8 +91,8 @@ class Report extends Validator {
         );
       case self::SLOW_CALL_FIELDS:
         return array(
-          'duration' => true,
-          'timestamp' => true,
+          'start' => true,
+          'end' => true,
           'type' => true,
           'subtype' => true,
           'parameters' => true,
