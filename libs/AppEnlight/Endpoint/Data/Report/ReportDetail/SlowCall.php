@@ -16,14 +16,14 @@ namespace AppEnlight\Endpoint\Data\Report\ReportDetail;
 class SlowCall {
 
   /**
-   * @var float
+   * @var timestamp
    */
-  protected $_duration;
+  protected $_start;
 
   /**
    * @var timestamp
    */
-  protected $_timestamp;
+  protected $_end;
 
   /**
    * @var string
@@ -46,20 +46,20 @@ class SlowCall {
   protected $_statement;
 
   /**
-   * @param float $duration
+   * @param timestamp $start
    * @return \AppEnlight\Endpoint\Data\Report\ReportDetail\SlowCall
    */
-  public function setDuration($duration) {
-    $this->_duration = $duration;
+  public function setStart($start) {
+    $this->_start = $start;
     return $this;
   }
 
   /**
-   * @param timstamp $timestamp
+   * @param timestamp $end
    * @return \AppEnlight\Endpoint\Data\Report\ReportDetail\SlowCall
    */
-  public function setTimestamp($timestamp) {
-    $this->_timestamp = $timestamp;
+  public function setEnd($end) {
+    $this->_end = $end;
     return $this;
   }
 
@@ -102,15 +102,15 @@ class SlowCall {
   /**
    * @return float
    */
-  public function getDuration() {
-    return (float) $this->_duration;
+  public function getStart() {
+    return $this->_start;
   }
 
   /**
    * @return timestamp
    */
-  public function getTimestamp() {
-    return $this->_timestamp;
+  public function getEnd() {
+    return $this->_end;
   }
 
   /**
@@ -146,8 +146,8 @@ class SlowCall {
    */
   public function toArray() {
     return array(
-      'duration' => $this->getDuration(),
-      'timestamp' => $this->getTimestamp(),
+      'start' => $this->getStart(),
+      'end' => $this->getEnd(),
       'type' => $this->getType(),
       'subtype' => $this->getSubtype(),
       'parameters' => $this->getParameters(),
