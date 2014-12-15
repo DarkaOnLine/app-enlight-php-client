@@ -39,7 +39,7 @@ class Report {
    * Language that the report is generated for - can impact indexing/UI looks
    * @var string
    */
-  protected $_view_name;
+  protected $_viewName;
 
   /**
    * Language that the report is generated for - can impact indexing/UI looks
@@ -92,19 +92,19 @@ class Report {
    * Contains the starting time of request in UTC - will be used to calculate request duration, default: current UTC time of report arrival
    * @var timestamp
    */
-  protected $_start_time;
+  protected $_startTime;
 
   /**
    * Contains the finish time of request in UTC - will be used to calculate request duration
    * @var timestamp
    */
-  protected $_end_time;
+  protected $_endTime;
 
   /**
    * Contains the finish time of request in UTC - will be used to calculate request duration
    * @var string
    */
-  protected $_user_agent;
+  protected $_userAgent;
 
   /**
    * Contains custom message attached to report
@@ -116,7 +116,7 @@ class Report {
    * Contains UUID identifier of this report, can be used to corellate log entries with reports - default: generated UUID
    * @var string
    */
-  protected $_request_id;
+  protected $_requestId;
 
   /**
    * Contains a dictionary object that holds keys and values for HTTP and CGI vars of report's request
@@ -223,7 +223,7 @@ class Report {
    * @return string
    */
   public function getViewName() {
-    return $this->_view_name;
+    return $this->_viewName;
   }
 
   /**
@@ -458,7 +458,7 @@ class Report {
    * @return \AppEnlight\Endpoint\Data\Report
    */
   public function setViewName($viewName) {
-    $this->_view_name = (string) $viewName;
+    $this->_viewName = (string) $viewName;
     return $this;
   }
 

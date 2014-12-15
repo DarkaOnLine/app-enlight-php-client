@@ -28,7 +28,7 @@ abstract class MetricBase {
   /**
    * @var float
    */
-  protected $_nosql_calls;
+  protected $_nosqlCalls;
 
   /**
    * @var float
@@ -38,7 +38,7 @@ abstract class MetricBase {
   /**
    * @var float
    */
-  protected $_remote_calls;
+  protected $_remoteCalls;
 
   /**
    * @var float
@@ -48,7 +48,7 @@ abstract class MetricBase {
   /**
    * @var float
    */
-  protected $_sql_calls;
+  protected $_sqlCalls;
 
   /**
    * @var float
@@ -58,7 +58,7 @@ abstract class MetricBase {
   /**
    * @var float
    */
-  protected $_tmpl_calls;
+  protected $_tmplCalls;
 
   /**
    * @var float
@@ -68,7 +68,7 @@ abstract class MetricBase {
   /**
    * @var float
    */
-  protected $_custom_calls;
+  protected $_customCalls;
 
   /**
    * @var float
@@ -94,7 +94,7 @@ abstract class MetricBase {
    * @return integer
    */
   public function getNosqlCalls() {
-    return $this->_nosql_calls;
+    return $this->_nosqlCalls;
   }
 
   /**
@@ -108,7 +108,7 @@ abstract class MetricBase {
    * @return integer
    */
   public function getRemoteCalls() {
-    return $this->_remote_calls;
+    return $this->_remoteCalls;
   }
 
   /**
@@ -122,7 +122,7 @@ abstract class MetricBase {
    * @return integer
    */
   public function getSqlCalls() {
-    return $this->_sql_calls;
+    return $this->_sqlCalls;
   }
 
   /**
@@ -136,7 +136,7 @@ abstract class MetricBase {
    * @return integer
    */
   public function getTmplCalls() {
-    return $this->_tmpl_calls;
+    return $this->_tmplCalls;
   }
 
   /**
@@ -150,7 +150,7 @@ abstract class MetricBase {
    * @return integer
    */
   public function getCustomCalls() {
-    return $this->_custom_calls;
+    return $this->_customCalls;
   }
 
   /**
@@ -176,7 +176,7 @@ abstract class MetricBase {
    * @return AppEnlight\Endpoint\Data\MetricBase
    */
   public function setNosqlCalls($nosql_calls) {
-    $this->_nosql_calls = (integer) $nosql_calls;
+    $this->_nosqlCalls = (integer) $nosql_calls;
     return $this;
   }
 
@@ -194,7 +194,7 @@ abstract class MetricBase {
    * @return AppEnlight\Endpoint\Data\MetricBase
    */
   public function setRemoteCalls($remote_calls) {
-    $this->_remote_calls = (integer) $remote_calls;
+    $this->_remoteCalls = (integer) $remote_calls;
     return $this;
   }
 
@@ -213,7 +213,7 @@ abstract class MetricBase {
    * @return AppEnlight\Endpoint\Data\MetricBase
    */
   public function setSqlCalls($sql_calls) {
-    $this->_sql_calls = (integer) $sql_calls;
+    $this->_sqlCalls = (integer) $sql_calls;
     return $this;
   }
 
@@ -231,7 +231,7 @@ abstract class MetricBase {
    * @return AppEnlight\Endpoint\Data\MetricBase
    */
   public function setTmplCalls($tmpl_calls) {
-    $this->_tmpl_calls = (integer) $tmpl_calls;
+    $this->_tmplCalls = (integer) $tmpl_calls;
     return $this;
   }
 
@@ -249,7 +249,7 @@ abstract class MetricBase {
    * @return AppEnlight\Endpoint\Data\MetricBases
    */
   public function setCustomCalls($custom_calls) {
-    $this->_custom_calls = (integer) $custom_calls;
+    $this->_customCalls = (integer) $custom_calls;
     return $this;
   }
 
