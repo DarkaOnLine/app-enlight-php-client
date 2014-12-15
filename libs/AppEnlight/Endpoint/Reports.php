@@ -15,7 +15,15 @@ use \AppEnlight\Endpoint\Data\Report;
 
 /**
  * Wrapper class for reports enpoint
- * https://api.appenlight.com/api/reports?protocol_version=0.4
+ *
+ * A report is a dictionary(array) of values, some of values
+ * that you can send can be data structures like dictionaries/lists.
+ * At minimum error report request must contain:
+ * - a list with at least one report
+ * - a single report needs to contain at least one of keys: url or view_name
+ *
+ * https://api.appenlight.com/api/reports?protocol_version=0.5
+ * @link https://appenlight.com/page/api/0.5/reports
  */
 class Reports extends Endpoint {
 
@@ -25,7 +33,7 @@ class Reports extends Endpoint {
   protected $_reports;
 
   /**
-   * @param \AppEnlight\Endpoint\Report $report
+   * @param Report $report
    * @return \AppEnlight\Endpoint\Reports
    */
   public function addReport(Report $report) {

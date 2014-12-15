@@ -15,7 +15,16 @@ use \AppEnlight\Endpoint\Data\Log;
 
 /**
  * Wrapper class for logs enpoint
- * https://api.appenlight.com/api/logs?protocol_version=0.4
+ *
+ * Request to api is a list of log messages.
+ * Each entry is a dictionary(array) of values.
+ * At minimum request must contain:
+ * - a list with at least one entry
+ * - entry should contain following keys: message
+ * - whole HTTP body of API request needs to be less than 1024kb
+ *
+ * https://api.appenlight.com/api/logs?protocol_version=0.5
+ * @link https://appenlight.com/page/api/0.5/logs
  */
 class Logs extends Endpoint {
 

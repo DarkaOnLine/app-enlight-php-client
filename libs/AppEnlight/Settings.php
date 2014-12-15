@@ -38,7 +38,7 @@ class Settings {
   /**
    * @var string
    */
-  protected $_version = "0.4";
+  protected $_version = "0.5";
 
   /**
    * @return string

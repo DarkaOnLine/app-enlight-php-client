@@ -18,36 +18,45 @@ use AppEnlight\Helper;
 class Log {
 
   /**
+   * Contains severity level for log entry
    * @var string
    */
   protected $_logLevel;
 
   /**
+   * Contains actual log message body
    * @var string
    */
   protected $_message;
 
   /**
+   * Identifies the origin of log message
    * @var string
    */
   protected $_namespace;
 
   /**
+   * Contains UUID identifier of request that generated the report,
+   * can be used to corellate log entries with reports/same transaction
    * @var string
    */
   protected $_requestId;
 
   /**
+   * Specifies the name of machine or instance that the application is running on
    * @var string
    */
   protected $_server;
 
   /**
+   * Contains the log creation time of in UTC - will be used
+   * to calculate request duration, default: current UTC time of report arrival
    * @var string
    */
   protected $_date;
 
   /**
+   * Contains severity level for log entry
    * @return string
    */
   public function getLogLevel() {
@@ -55,6 +64,7 @@ class Log {
   }
 
   /**
+   * Contains actual log message body
    * @return string
    */
   public function getMessage() {
@@ -62,6 +72,7 @@ class Log {
   }
 
   /**
+   * Identifies the origin of log message
    * @return string
    */
   public function getNamespace() {
@@ -69,6 +80,8 @@ class Log {
   }
 
   /**
+   * Contains UUID identifier of request that generated the report,
+   * can be used to corellate log entries with reports/same transaction
    * @return string
    */
   public function getRequestId() {
@@ -76,6 +89,7 @@ class Log {
   }
 
   /**
+   * Specifies the name of machine or instance that the application is running on
    * @return string
    */
   public function getServer() {
@@ -83,6 +97,8 @@ class Log {
   }
 
   /**
+   * Contains the log creation time of in UTC - will be used
+   * to calculate request duration, default: current UTC time of report arrival
    * @return string
    */
   public function getDate() {
@@ -94,7 +110,7 @@ class Log {
    * @return \AppEnlight\Endpoint\Data\Log
    */
   public function setLogLevel($logLevel) {
-    $this->_logLevel = $logLevel;
+    $this->_logLevel = (string) $logLevel;
     return $this;
   }
 
@@ -103,7 +119,7 @@ class Log {
    * @return \AppEnlight\Endpoint\Data\Log
    */
   public function setMessage($message) {
-    $this->_message = $message;
+    $this->_message = (string) $message;
     return $this;
   }
 
@@ -112,7 +128,7 @@ class Log {
    * @return \AppEnlight\Endpoint\Data\Log
    */
   public function setNamespace($namespace) {
-    $this->_namespace = $namespace;
+    $this->_namespace = (string) $namespace;
     return $this;
   }
 
@@ -121,7 +137,7 @@ class Log {
    * @return \AppEnlight\Endpoint\Data\Log
    */
   public function setRequestId($requestId) {
-    $this->_requestId = $requestId;
+    $this->_requestId = (string) $requestId;
     return $this;
   }
 
@@ -130,7 +146,7 @@ class Log {
    * @return \AppEnlight\Endpoint\Data\Log
    */
   public function setServer($server) {
-    $this->_server = $server;
+    $this->_server = (string) $server;
     return $this;
   }
 
@@ -148,11 +164,11 @@ class Log {
    */
   public function toArray() {
     return array(
-      "log_level" => $this->getLogLevel(),
-      "message" => $this->getMessage(),
-      "namespace" => $this->getNamespace(),
-      "request_id" => $this->getRequestId(),
-      "server" => $this->getServer(),
+      "log_level" => substr($this->getLogLevel(), 0, 10),
+      "message" => substr($this->getMessage(), 0, 4096),
+      "namespace" => substr($this->getNamespace(), 0, 128),
+      "request_id" => substr($this->getRequestId(), 0, 40),
+      "server" => substr($this->getServer(), 0, 128),
       "date" => $this->getDate(),
     );
   }

@@ -1,15 +1,14 @@
 App Enlight PHP Client
 ======================
 
-IMPORTANT: This library is under development. Do not use it for your productive application!
+IMPORTANT: This library is under development. You can use it for productive application on your own risk!
 
 PHP Client for AppEnlight (previously known as Errormator).
 
 App Enlight main goal is to monitor your application. This API client for PHP provides an easy to use interface to send to App Enlight:
 - logs;
 - error reports;
-- slow requests.
-
+- slow requests (with metrics).
 
 Requirements
 ============
@@ -43,7 +42,7 @@ Note that you can ommit other settings and client will still work. Below example
     $settings->setClient('php');
     $settings->setScheme('https');
     $settings->setUrl('api.appenlight.com/api');
-    $settings->setVersion('0.4');
+    $settings->setVersion('0.5');
     return $settings;
 ```
 
@@ -92,23 +91,22 @@ Below example shows how to send simple report
     use \AppEnlight\Endpoint;
     use \AppEnlight\Endpoint\Data;
     use \AppEnlight\Endpoint\Data\Report;
-    use \AppEnlight\Endpoint\Data\Report\ReportDetail;
     
     //get client
     $client = new Client($settings);
 
     //prepare report detail data 
-    $reportDetails = new ReportDetail();
-    $reportDetails->setUsername('test user');
-    $reportDetails->setUrl('http://localhost');
-    $reportDetails->setIp('127.0.0.1');
-    $reportDetails->setUserAgent('Chrome');
-    $reportDetails->setMessage('Very serious error');
-    $reportDetails->setRequestId($client->getUUID());
-    $reportDetails->setRequestStats(new RequestStats());
+    $report = new Report();
+    $report->setUsername('test user');
+    $report->setUrl('http://localhost');
+    $report->setIp('127.0.0.1');
+    $report->setUserAgent('Chrome');
+    $report->setMessage('Very serious error');
+    $report->setRequestId($client->getUUID());
+    $report->setRequestStats(new RequestStats());
     
     //analyse trace returned by exception
-    $trace = $exception->getTrace()
+    $trace = $exception->getTrace();
     foreach($trace as $t) {
       $aeTrace = new Traceback();
       $aeTrace->setFile(isset($t['file']) ? $t['file'] : 'unknown');
@@ -117,19 +115,21 @@ Below example shows how to send simple report
       $reportDetail->addTraceback($aeTrace);
     }
     
-    $reportDetails->setRequest(new Request(););
+    $report->setRequest(new Request(););
   
-    $report = new Report();
     $report->setError('Very dangerouse error');
     $report->setHttpStatus(500);
-    $report->addReportDetails($reportDetails);
 
     $client->addReport($report);
     $client->send();
 ```    
 
+Update from version 0.4 to 0.5
+==============================
+Note that API in version 0.5 has been changed comparing to version 0.4. 
+Briefly, report grouping has been changed and since version 0.5 content of report_details became part of single report.
+For more details compare documentation Reports endpoint for version [0.4](https://appenlight.com/page/api/0.5/reports) with [0.5](https://appenlight.com/page/api/0.5/reports)
+
 Todo
 ====
-- add better error hanling;
-- add checks before sending data to App Enlight;
 - add documentation how to use extension in Yii;

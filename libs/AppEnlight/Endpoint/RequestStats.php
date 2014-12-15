@@ -16,8 +16,23 @@ use AppEnlight\Endpoint\Data\Metric;
 
 /**
  * Wrapper class for metrics endpoint
- * https://api.appenlight.com/api/reports?protocol_version=0.4
- * @link https://appenlight.com/page/api/0.4/interface#metrics-api-endpoint
+ *
+ * Request to api is a list of metrics.
+ * Each entry is a dictionary(array) of values.
+ * At minimum request must contain:
+ * - a list with at least one entry
+ * - each entry should be a metrics dictionary for separate time interval
+ *   (grouped per minute) holding request stats for each
+ *   view/controller of application.
+ * - each request stat needs to be a pair of ["view_name", {view_stats}]
+ *   formed in format outlined above, *_calls keys contain number of calls
+ *   that were executed during requests for corresponding layer,
+ *   keys that do not contain *_calls will hold the time in seconds
+ *   that application spent executing code/waiting
+ *   for data in a given application layer.
+ *
+ * https://api.appenlight.com/api/reports?protocol_version=0.5
+ * @link https://appenlight.com/page/api/0.5/metrics
  */
 class RequestStats extends Endpoint {
 
@@ -37,19 +52,11 @@ class RequestStats extends Endpoint {
   protected $_metrics;
 
   /**
-   * @param \AppEnlight\Endpoint\Data\Metric $metrics
+   * @param Metric $metrics
    * @return \AppEnlight\Endpoint\RequestStats
    */
   public function addMetric(Metric $metrics) {
     $this->_metrics[] = $metrics->toArray();
-    return $this;
-  }
-
-  /**
-   * @return \AppEnlight\Endpoint\RequestStats
-   */
-  public function clearData() {
-    unset($this->_requestStats);
     return $this;
   }
 
@@ -89,6 +96,14 @@ class RequestStats extends Endpoint {
    */
   public function setServer($server) {
     $this->_server = $server;
+    return $this;
+  }
+
+  /**
+   * @return \AppEnlight\Endpoint\Reports
+   */
+  public function clearData() {
+    unset($this->_metrics);
     return $this;
   }
 

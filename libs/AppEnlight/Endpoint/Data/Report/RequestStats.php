@@ -8,13 +8,13 @@
  * @author Tomasz Suchanek <tomasz.suchanek@gmail.com>
  */
 
-namespace AppEnlight\Endpoint\Data;
+namespace AppEnlight\Endpoint\Data\Report;
 
 use AppEnlight\Endpoint\Data\MetricBase;
 
 /**
- * Request stats part of report detail
+ * Metric part of metric report
  */
-class Metric extends MetricBase {
+class RequestStats extends MetricBase {
 
 }

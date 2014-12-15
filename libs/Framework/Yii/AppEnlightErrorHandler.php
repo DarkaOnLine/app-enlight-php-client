@@ -19,53 +19,58 @@ class AppEnlightErrorHandler extends CErrorHandler {
 
     /* @var $client \AppEnlight\Client */
     $appEnlight = Yii::app()->getComponent('appenlight');
+
+    /* initialziation */
     $client = $appEnlight->getClient();
+    $appRequest = Yii::app()->getRequest();
+    $appController = Yii::app()->getController();
 
     $category = 'exception.' . get_class($exception);
     if ($exception instanceof CHttpException) {
       $category.='.' . $exception->statusCode;
     }
 
-    $appRequest = Yii::app()->getRequest();
+    /* report to be sent */
+    $report = new AppEnlight\Endpoint\Data\Report();
+    $report->setUsername($appEnlight->getUsername());
 
-    $request = new AppEnlight\Endpoint\Data\Report\ReportDetail\Request();
+    /* get view name from action */
+    $report->setViewName($appController->getViewPath());
 
-    $reportDetails = new AppEnlight\Endpoint\Data\Report\ReportDetail();
-    $reportDetails->setUsername($appEnlight->getUsername());
+    /* getUrl doesn't exists in ConsoleApplication and causes errors */
     if (Yii::app() instanceof CConsoleApplication) {
-      $reportDetails->setUrl($appEnlight->getHostName());
+      $report->setUrl($appEnlight->getHostName());
     } else {
-      $reportDetails->setUrl($appEnlight->getHostName() . $appRequest->getUrl());
+      $report->setUrl($appEnlight->getHostName() . $appRequest->getUrl());
     }
 
-    $reportDetails->setUserAgent($appRequest->getUserAgent());
-    $reportDetails->setMessage($exception->__toString());
-    $reportDetails->setRequestId($client->getUUID());
-    $reportDetails->setRequestStats(new \AppEnlight\Endpoint\Data\Report\ReportDetail\RequestStats);
-    $this->_processTrace($exception, $reportDetails);
-    $reportDetails->setRequest($request);
+    $report->setUserAgent($appRequest->getUserAgent());
+    $report->setMessage($exception->__toString());
+    $report->setRequestId($client->getUUID());
 
-    $report = new AppEnlight\Endpoint\Data\Report();
     $report->setError($exception->getMessage());
     $report->setHttpStatus($exception instanceof CHttpException ? $exception->statusCode : 500);
-    $report->addReportDetails($reportDetails);
+
+    /* request is filled automatically */
+    $request = new AppEnlight\Endpoint\Data\Report\Request();
+    $report->setRequest($request);
 
     $client->addReport($report);
-    $result = $client->sendReports();
+    $client->sendReports();
 
     parent::handleException($exception);
   }
 
   /**
    * @param Exception $exception
-   * @param AppEnlight\Endpoint\Data\Report\ReportDetail $reportDetail
+   * @param AppEnlight\Endpoint\Data\Report\Report $report
    */
-  protected function _processTrace(Exception $exception, AppEnlight\Endpoint\Data\Report\ReportDetail $reportDetail) {
+  protected function _processTrace(Exception $exception, AppEnlight\Endpoint\Data\Report $report) {
 
     $trace = $exception->getTrace();
 
     foreach ($trace as $t) {
-      $aeTrace = new \AppEnlight\Endpoint\Data\Report\ReportDetail\Traceback();
+      $aeTrace = new \AppEnlight\Endpoint\Data\Report\Traceback();
       $aeTrace->setFile(isset($t['file']) ? $t['file'] : 'unknown');
       $aeTrace->setFn(isset($t['class']) ? "{$t['class']}->{$t['function']}" : $t['function']);
       $aeTrace->setLine(isset($t['line']) ? $t['line'] : 0);
@@ -74,7 +79,7 @@ class AppEnlightErrorHandler extends CErrorHandler {
         $aeArgs[] = $arg;
       }
       $aeTrace->setVars($aeArgs);
-      $reportDetail->addTraceback($aeTrace);
+      $report->addTraceback($aeTrace);
       unset($aeTrace);
     }
   }
