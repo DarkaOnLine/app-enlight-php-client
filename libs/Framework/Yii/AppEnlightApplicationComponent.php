@@ -23,7 +23,7 @@ class AppEnlightApplicationComponent extends CApplicationComponent {
    * AppEnlight API version
    * @var string
    */
-  public $apiVersion = '0.4';
+  public $apiVersion = '0.5';
 
   /**
    * Client from which we are logging/sending data
