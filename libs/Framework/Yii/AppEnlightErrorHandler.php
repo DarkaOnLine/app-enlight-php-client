@@ -51,6 +51,8 @@ class AppEnlightErrorHandler extends CErrorHandler {
     $report->setError($exception->getMessage());
     $report->setHttpStatus($exception instanceof CHttpException ? $exception->statusCode : 500);
 
+    $report->_processTrace($exception, $report);
+
     /* request is filled automatically */
     $request = new AppEnlight\Endpoint\Data\Report\Request();
     $report->setRequest($request);

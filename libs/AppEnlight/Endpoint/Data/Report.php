@@ -397,7 +397,7 @@ class Report {
    * @return array
    */
   public function getTraceback() {
-    return isset($this->_traceback);
+    return $this->_traceback;
   }
 
   /**
