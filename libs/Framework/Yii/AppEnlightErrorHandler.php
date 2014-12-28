@@ -80,7 +80,7 @@ class AppEnlightErrorHandler extends CErrorHandler {
       foreach ($t['args'] as $arg) {
         $aeArgs[] = $arg;
       }
-      $aeTrace->setVars($aeArgs);
+      $aeTrace->setVars(CJSON::encode($aeArgs));
       $report->addTraceback($aeTrace);
       unset($aeTrace);
     }
