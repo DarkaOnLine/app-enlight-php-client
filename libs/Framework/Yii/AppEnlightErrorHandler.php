@@ -24,6 +24,9 @@ class AppEnlightErrorHandler extends CErrorHandler {
     $client = $appEnlight->getClient();
     $appRequest = Yii::app()->getRequest();
     $appController = Yii::app()->getController();
+    if (!$appController && Yii::app() instanceof CConsoleApplication) {
+      $appCommand = Yii::app()->getCommand();
+    }
 
     $category = 'exception.' . get_class($exception);
     if ($exception instanceof CHttpException) {
@@ -35,7 +38,14 @@ class AppEnlightErrorHandler extends CErrorHandler {
     $report->setUsername($appEnlight->getUsername());
 
     /* get view name from action */
-    $report->setViewName($appController->getViewPath());
+    if (isset($appController)) {
+      $viewName = $appController->getViewPath();
+    } elseif (isset($appCommand)) {
+      $viewName = $appCommand->getCommandPath();
+    } else {
+      $viewName = 'application.console';
+    }
+    $report->setViewName($viewName);
 
     /* getUrl doesn't exists in ConsoleApplication and causes errors */
     if (Yii::app() instanceof CConsoleApplication) {
