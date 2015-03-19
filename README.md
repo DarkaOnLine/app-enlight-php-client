@@ -133,3 +133,4 @@ For more details compare documentation Reports endpoint for version [0.4](https:
 Todo
 ====
 - add documentation how to use extension in Yii;
+- add documentation how to use extension in Laravel 5;
