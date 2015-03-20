@@ -26,6 +26,9 @@
       "psr-0": {
         "AppEnlight": "libs/",
         "AppEnlight\\Test": "test/libs"
-      }
+      },
+        "psr-4": {
+            "AppEnlight\\Laravel\\": "libs/Framework/Laravel/src"
+        }
     }
 }
