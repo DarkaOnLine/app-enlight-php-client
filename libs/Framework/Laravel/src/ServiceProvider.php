@@ -66,6 +66,4 @@ class ServiceProvider  extends Provider
             'AppEnlight\Laravel\ErrorHandler'
         ];
     }
-
-
 }

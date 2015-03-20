@@ -91,5 +91,4 @@ class ErrorHandler {
             unset($aeTrace);
         }
     }
-
 }
