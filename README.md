@@ -130,6 +130,30 @@ Note that API in version 0.5 has been changed comparing to version 0.4.
 Briefly, report grouping has been changed and since version 0.5 content of report_details became part of single report.
 For more details compare documentation Reports endpoint for version [0.4](https://appenlight.com/page/api/0.5/reports) with [0.5](https://appenlight.com/page/api/0.5/reports)
 
+Integration with Laravel5
+=========================
+- Run `php artisan vendor:publish --provider="AppEnlight\Laravel\ServiceProvider"` to publish config (`config/app-enlight.php`)
+- Add `AppEnlight\Laravel\ServiceProvider` to your providers array in `config/app.php`
+- Add 2 lines in `App\Exceptions\Handler` to `report` function
+```php
+    //Send error report to AppEnlight
+    global $app;
+    $app->make('AppEnlight\Laravel\ErrorHandler', $e);
+```
+
+the final function should look like this:
+```php
+    public function report(Exception $e)
+    {
+        //Send error report to AppEnlight
+        global $app;
+        $app->make('AppEnlight\Laravel\ErrorHandler', $e);
+
+        return parent::report($e);
+    }
+```
+
+
 Todo
 ====
 - add documentation how to use extension in Yii;
