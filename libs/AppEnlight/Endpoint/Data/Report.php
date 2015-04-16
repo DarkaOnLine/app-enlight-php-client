@@ -11,7 +11,7 @@
 namespace AppEnlight\Endpoint\Data;
 
 use AppEnlight\Helper;
-use AppEnlight\Endpoint\Data\Report\Extra;
+use AppEnlight\Endpoint\Data\Report\RequestExtra;
 use AppEnlight\Endpoint\Data\Report\Tag;
 use AppEnlight\Endpoint\Data\Report\Request;
 use AppEnlight\Endpoint\Data\Report\RequestStats;
@@ -136,7 +136,7 @@ class Report {
 
   /**
    * Contains a list of key/value pairs that are used to annotate reports with extra information
-   * @var Extra[]
+   * @var RequestExtra[]
    */
   protected $_extra;
 
@@ -174,10 +174,10 @@ class Report {
 
   /**
    * Adds key/value pair that are used to annotate reports with extra information
-   * @param Extra $extra
+   * @param RequestExtra $extra
    * @return \AppEnlight\Endpoint\Data\Report
    */
-  public function addExtra(Extra $extra) {
+  public function addExtra(RequestExtra $extra) {
     $this->_extra[] = $extra->toArray();
     return $this;
   }

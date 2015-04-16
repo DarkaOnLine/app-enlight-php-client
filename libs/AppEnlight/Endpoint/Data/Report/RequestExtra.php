@@ -11,9 +11,9 @@
 namespace AppEnlight\Endpoint\Data\Report;
 
 /**
- * Request part of report detail
+ * Extra request part of report detail
  */
-class Request {
+class RequestExtra {
 
   /**
    * @var string
@@ -41,7 +41,7 @@ class Request {
 
   /**
    * @param string $key
-   * @return \AppEnlight\Endpoint\Data\Report\Request
+   * @return \AppEnlight\Endpoint\Data\Report\RequestExtra
    */
   public function setKey($key) {
     $this->_key = (string) $key;
@@ -50,7 +50,7 @@ class Request {
 
   /**
    * @param mixed $value
-   * @return \AppEnlight\Endpoint\Data\Report\Request
+   * @return \AppEnlight\Endpoint\Data\Report\RequestExtra
    */
   public function setValue($value) {
     $this->_value = $value;
