@@ -134,6 +134,36 @@ Integration with Laravel5
 =========================
 - Run `php artisan vendor:publish --provider="AppEnlight\Laravel\ServiceProvider"` to publish config (`config/app-enlight.php`)
 - Add `AppEnlight\Laravel\ServiceProvider` to your providers array in `config/app.php`
+
+For Laravel 5.1.*
+-
+- Add these lines in `App\Exceptions\Handler` to `report` function
+```php
+    //Send error report to AppEnlight
+    if(in_array(app()->environment(), 
+        config('app-enlight')['notify_release_stages'])) {
+        app(\AppEnlight\Laravel\ErrorHandler::class,
+            [config('app-enlight'), $e]);
+    }
+```
+
+the final function should look like this:
+```php
+    public function report(Exception $e)
+    {
+        //Send error report to AppEnlight
+        if(in_array(app()->environment(), 
+            config('app-enlight')['notify_release_stages'])) {
+            app(\AppEnlight\Laravel\ErrorHandler::class,
+                [config('app-enlight'), $e]);
+        }
+
+        return parent::report($e);
+    }
+```
+
+For Laravel 5.0.*
+-
 - Add 2 lines in `App\Exceptions\Handler` to `report` function
 ```php
     //Send error report to AppEnlight
