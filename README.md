@@ -164,11 +164,10 @@ the final function should look like this:
 
 For Laravel 5.0.*
 -
-- Add 2 lines in `App\Exceptions\Handler` to `report` function
+- Add this line in `App\Exceptions\Handler` to `report` function
 ```php
     //Send error report to AppEnlight
-    global $app;
-    $app->make('AppEnlight\Laravel\ErrorHandler', $e);
+    app()->make(\AppEnlight\Laravel\ErrorHandler:class, $e);
 ```
 
 the final function should look like this:
@@ -176,8 +175,7 @@ the final function should look like this:
     public function report(Exception $e)
     {
         //Send error report to AppEnlight
-        global $app;
-        $app->make('AppEnlight\Laravel\ErrorHandler', $e);
+        app()->make(\AppEnlight\Laravel\ErrorHandler:class, $e);
 
         return parent::report($e);
     }
